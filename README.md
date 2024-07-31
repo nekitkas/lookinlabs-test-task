@@ -43,7 +43,39 @@ Second query should get all users from database.
 
 Write golang tests for the endpoints.
 
-## Task 2 (Cloud Operations)
+**4. Add simple frontend with simple form**
+
+Add simple frontend with simple form in the middle of the page. On top from form you should have two tabs (Create User) and (Get User). When you click on the tab, the form should change to the form, which is needed for the endpoint.
+
+Create User tab will make an POST request to /api/v1/users/create endpoint with header "Content-Type" = "application/json". The form should have the following request body:
+- id
+- name
+- email
+- created_at
+- updated_at
+- deleted_at
+
+Example:
+
+```json
+{
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@no-reply.com",
+    "password": "password",
+    "created_at": "2021-10-10T10:00:00Z",
+    "updated_at": "2021-10-10T10:00:00Z",
+    "deleted_at": "2021-10-10T10:00:00Z"
+}
+```
+
+Get User tab will make an GET request to /api/v1/users/get endpoint with header "Content-Type" = "application/json". The form should return all users with user ID's. For example they can be return as a table.
+
+**5. Backend validation (advanced)**
+
+Add validation for the request body in the endpoints. The validation should be done in model layer.
+
+## Task 2 (Cloud Operations - advanced)
 
 **1. Write a Dockerfile for the application**
 
