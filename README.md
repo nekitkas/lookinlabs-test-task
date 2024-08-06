@@ -17,6 +17,7 @@ Write an golang web http server based on Gin framework that will have 2 endpoint
 - GET /api/v1/ping that will return pong as message
 - POST /api/v1/users with request body which will create a user in database via JSON Request Body
 - GET /api/v1/users which will get all users from database in JSON Response Body
+- GET /api/v1/user which will get only one user from database in JSON Response Body
 - PATCH /api/v1/users which will update a user in database via JSON Request Body
 
 The messages should be done in a json way, e.g:
