@@ -30,16 +30,7 @@ The messages should be done in a json way, e.g:
 
 Configure database connection and write queries, which will be used in `*/users*` endpoints.
 
-First query should create a user in database. The user should have the following fields:
-- id
-- name
-- email
-- password
-- created_at
-- updated_at
-- deleted_at
-
-Second query should get all users from database.
+The database should be PostgreSQL. The database should have a table `users`. The table content is up to you.
 
 **3. Write tests for the endpoints**
 
@@ -49,29 +40,17 @@ Write golang tests for the endpoints. It'd nice if tests will be located under /
 
 Add simple frontend with simple form in the middle of the page. On top from form you should have two tabs (Create User) and (Get User). When you click on the tab, the form should change to the form, which is needed for the endpoint.
 
-Create User tab will make an POST request to /api/v1/users/create endpoint with header "Content-Type" = "application/json". The form should have the following request body:
-- id
-- name
-- email
-- created_at
-- updated_at
-- deleted_at
+Create User tab will make an POST request to /api/v1/users endpoint with header "Content-Type" = "application/json". The form should make the same request body as in first point. So if you have database table `users` with columns `id`, `name`, `email`, the form should have 2 inputs: name, email.
 
-Example:
-
-```json
+And the request body will look like:
+```
 {
-    "id": 1,
-    "name": "John Doe",
-    "email": "john.doe@no-reply.com",
-    "password": "password",
-    "created_at": "2021-10-10T10:00:00Z",
-    "updated_at": "2021-10-10T10:00:00Z",
-    "deleted_at": "2021-10-10T10:00:00Z"
+  "name": "John Doe",
+  "email": "john.doe@no-reply.com,
 }
 ```
 
-Get User tab will make an GET request to /api/v1/users/get endpoint with header "Content-Type" = "application/json". The form should return all users with user ID's. For example they can be return as a table.
+Get User tab will make an GET request to /api/v1/users endpoint. The form should return all users with user ID's. For example they can be returned as a table in the middle of the page.
 
 **5. Backend validation (advanced)**
 
