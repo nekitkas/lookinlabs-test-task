@@ -4,9 +4,11 @@ The goal of this task is to evaluate your skills in software engineering, proble
 
 This repository uses MVC layered architecture. Middleware gets the request and sends to controller. Controller sends the request to service. Service sends the request to repository. Repository sends the request to database. Database sends the response to repository. Repository sends the response to service. Service sends the response to controller. Controller sends the response to middleware. Middleware sends the response to client.
 
+LookinLabs test task is divided into two parts: Software Engineering and Cloud Operations. It's important to mention that advanced tasks are optional and meant for more experienced candidates.
+
 **Note** There are layers, that are not needed for this task like service.
 
-## Task 1 (Software Engineering)
+## Main Task (Software Engineering)
 
 **1. Write an golang http server with basic requests**
 
@@ -41,7 +43,7 @@ Second query should get all users from database.
 
 **3. Write tests for the endpoints**
 
-Write golang tests for the endpoints.
+Write golang tests for the endpoints. It'd nice if tests will be located under /tests folder.
 
 **4. Add simple frontend with simple form**
 
@@ -75,6 +77,15 @@ Get User tab will make an GET request to /api/v1/users/get endpoint with header 
 
 Add validation for the request body in the endpoints. The validation should be done in model layer.
 
+**6. Solve code problems**
+
+Solve the following problems:
+- golang modules are not working, find and fix it
+- problemSolver causes memory leak, find the issue and fix it
+
+Hint: [htop](https://hisham.hm/htop/) can be used to monitor the memory leak.
+Hint: Data slice length is the key to solve the problem.
+
 ## Task 2 (Cloud Operations - advanced)
 
 **1. Write a Dockerfile for the application**
@@ -90,15 +101,6 @@ Write a docker-compose file for the application using docker best practices. Doc
 Run the application inside of AWS app runner via terraform. You can use [following repository](https://github.com/KostLinux/aws-app-runner-tf-template) to deploy the application.
 
 But if you use the repository, remove everything, which is unnecessary to run the application in AWS App Runner (like route53).
-
-## Task 3 (Problem Solving)
-
-Solve the following problems:
-- golang modules are not working, find and fix it
-- problemSolver causes memory leak, find the issue and fix it
-
-Hint: [htop](https://hisham.hm/htop/) can be used to monitor the memory leak.
-Hint: Data slice length is the key to solve the problem.
 
 ## Comments
 
