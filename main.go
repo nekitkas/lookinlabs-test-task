@@ -1,26 +1,40 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"lookinlabs-test/config"
+	"lookinlabs-test/controller"
+	"lookinlabs-test/middleware"
+	"lookinlabs-test/model"
+	"lookinlabs-test/repository"
 	"net/http"
-	_ "net/http/pprof"
-	"time"
+	"os"
+
+	"github.com/rs/cors"
 )
 
 func main() {
-	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil))
-	}()
-	fmt.Println("Hello, World!")
-	problemSolver(1000000) // Increase the data amount to make the leak more apparent
-}
-
-func problemSolver(dataAmount int) {
-	var data []int
-	for {
-		data = append(data, make([]int, dataAmount)...) // Append a large slice to increase memory usage
-		time.Sleep(10 * time.Millisecond)
-		fmt.Println("Length of slice:", len(data))
+	pgConfig, err := config.NewPGSQLConfig()
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	connection := repository.NewConnection(pgConfig)
+	if err = connection.DB().AutoMigrate(&model.User{}); err != nil {
+		log.Fatal(err)
+	}
+
+	userController := controller.NewUserController(*connection)
+	router := middleware.NewRouter(userController)
+
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Content-Type", "Content-Length", "Authorization"},
+		AllowCredentials: true,
+	})
+
+	appPort := os.Getenv("API_PORT")
+
+	log.Fatal(http.ListenAndServe(":"+appPort, corsMiddleware.Handler(router)))
 }

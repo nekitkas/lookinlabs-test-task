@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "5433:${POSTGRES_PORT}"
+    volumes:
+       - ./data/db:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: on-failure
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    environment:
+      POSTGRES_HOST: db
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./web
+    restart: on-failure
+    ports:
+      - "3000:80"
+    volumes:
+      - ./web:/app
