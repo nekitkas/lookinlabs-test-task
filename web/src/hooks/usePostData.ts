@@ -22,10 +22,15 @@ export const usePostData = <T, R>(url: string, options: PostOptions<T>) => {
                 },
                 body: JSON.stringify(options.body),
             });
+
+            if (!response.ok) {
+                throw new Error(`${response.statusText}`);
+            }
             const responseData: R = await response.json();
             setData(responseData);
+            setError(null);
         } catch (error) {
-            setError(`An error occurred: ${error}`);
+            setError(`${error}`);
         } finally {
             setLoading(false);
         }

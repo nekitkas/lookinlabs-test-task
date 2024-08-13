@@ -1,3 +1,22 @@
+# Getting Started
+
+Docker compose is required to run the application. If you don't have it, you can install it from [here](https://docs.docker.com/compose/install/).
+
+Copy the .env.example file to .env file:
+
+```bash
+cp .env.example .env
+```
+
+Write password to POSTGRES_PASSWORD in .env file.
+
+To run the application, you need to run the following command:
+```bash
+docker-compose up
+```
+
+UI will be available at [http://localhost:3000](http://localhost:3000).
+
 # LookinLabs Test Task
 
 The goal of this task is to evaluate your skills in software engineering, problem solving and coding.

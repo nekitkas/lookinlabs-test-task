@@ -16,6 +16,7 @@ export const CreateUser: React.FC = () => {
         postData();
     }
 
+    console.log({ data, loading, error })
     return (
         <div className="max-w-md mx-auto bg-white shadow-md rounded p-6">
             <h1 className="text-2xl font-bold mb-4">Create User</h1>

@@ -9,10 +9,14 @@ export const useFetchData = <T,>(url: string) => {
         const fetchData = async () => {
             try {
                 const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`${response.statusText}`);
+                }
                 const data: T = await response.json();
                 setData(data);
+                setError(null);
             } catch (error) {
-                setError(`An error occurred: ${error}`);
+                setError(`${error}`);
             } finally {
                 setLoading(false);
             }
