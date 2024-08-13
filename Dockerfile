@@ -10,11 +10,22 @@ COPY . .
 
 RUN go build -o main .
 
+FROM node:20-alpine AS web-builder
+
+WORKDIR /app
+
+COPY web/package.json ./
+
+RUN npm install
+
+COPY web/ ./
+
+RUN npm run build
+
 FROM alpine:latest
 
-COPY --from=builder /app/main ./
-COPY --from=builder /app/.env ./
-COPY --from=builder /app/web/build ./web/build
-
+COPY --from=api-builder /app/main ./
+COPY --from=api-builder /app/.env ./
+COPY --from=web-builder /app/build ./web/build
 
 CMD ["/main"]

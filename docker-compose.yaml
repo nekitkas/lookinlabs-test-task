@@ -21,12 +21,3 @@ services:
       - .:/app
     depends_on:
       - db
-
-  frontend:
-    build:
-      context: ./web
-    restart: on-failure
-    ports:
-      - "3000:80"
-    volumes:
-      - ./web:/app
