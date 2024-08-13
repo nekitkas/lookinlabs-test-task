@@ -10,14 +10,12 @@ export const Home: React.FC = () => {
             <nav className="mb-4 flex justify-center space-x-4">
                 <button
                     onClick={() => setActiveTab('createUser')}
-                    className={`px-4 py-2 rounded-md text-white ${activeTab === 'createUser' ? 'bg-indigo-600' : 'bg-gray-600 hover:bg-gray-700'}`}
-                >
+                    className={`px-4 py-2 rounded-md text-white ${activeTab === 'createUser' ? 'bg-indigo-600' : 'bg-gray-600 hover:bg-gray-700'}`}>
                     Create User
                 </button>
                 <button
                     onClick={() => setActiveTab('userCards')}
-                    className={`px-4 py-2 rounded-md text-white ${activeTab === 'userCards' ? 'bg-indigo-600' : 'bg-gray-600 hover:bg-gray-700'}`}
-                >
+                    className={`px-4 py-2 rounded-md text-white ${activeTab === 'userCards' ? 'bg-indigo-600' : 'bg-gray-600 hover:bg-gray-700'}`}>
                     User Cards
                 </button>
             </nav>
