@@ -1,14 +1,18 @@
 package middleware
 
 import (
+	"embed"
 	"lookinlabs-test/controller"
 	"net/http"
 
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
-func NewRouter(userController controller.UserController) *gin.Engine {
+func NewRouter(userController controller.UserController, fsEmbed embed.FS) *gin.Engine {
 	router := gin.Default()
+
+	router.Use(static.Serve("/", static.EmbedFolder(fsEmbed, "web/build")))
 
 	router.GET("api/v1/ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{

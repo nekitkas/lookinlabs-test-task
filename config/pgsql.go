@@ -17,6 +17,7 @@ type pgsqlConfig struct {
 	user     string
 	password string
 	dbname   string
+	sslmode  string
 }
 
 func NewPGSQLConfig() (PGSQLConfig, error) {
@@ -29,6 +30,7 @@ func NewPGSQLConfig() (PGSQLConfig, error) {
 	user := os.Getenv("POSTGRES_USER")
 	password := os.Getenv("POSTGRES_PASSWORD")
 	dbname := os.Getenv("POSTGRES_DB")
+	sslmode := os.Getenv("POSTGRES_SSLMODE")
 
 	return &pgsqlConfig{
 		host:     host,
@@ -36,9 +38,18 @@ func NewPGSQLConfig() (PGSQLConfig, error) {
 		user:     user,
 		password: password,
 		dbname:   dbname,
+		sslmode:  sslmode,
 	}, nil
 }
 
 func (p pgsqlConfig) DSN() string {
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", p.host, p.port, p.user, p.password, p.dbname)
+	return fmt.Sprintf(
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		p.host,
+		p.port,
+		p.user,
+		p.password,
+		p.dbname,
+		p.sslmode,
+	)
 }

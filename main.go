@@ -12,13 +12,11 @@ import (
 	"os"
 
 	"github.com/rs/cors"
-	"golang.org/x/sync/errgroup"
 )
 
 var (
 	//go:embed web
 	build embed.FS
-	g     errgroup.Group
 )
 
 func main() {
@@ -33,8 +31,7 @@ func main() {
 	}
 
 	userController := controller.NewUserController(*connection)
-	router := middleware.NewRouter(userController)
-	frontendRouter := middleware.NewFrontedRouter(build)
+	router := middleware.NewRouter(userController, build)
 	corsMiddleware := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -42,30 +39,8 @@ func main() {
 		AllowCredentials: true,
 	})
 
-	appPort := os.Getenv("API_PORT")
-	frontedPort := os.Getenv("FRONTEND_PORT")
+	appPort := os.Getenv("APP_PORT")
 
-	apiServer := &http.Server{
-		Addr:    ":" + appPort,
-		Handler: corsMiddleware.Handler(router),
-	}
-
-	frontedServer := &http.Server{
-		Addr:    ":" + frontedPort,
-		Handler: frontendRouter,
-	}
-
-	log.Println("Starting API server on port", appPort)
-	g.Go(func() error {
-		return apiServer.ListenAndServe()
-	})
-
-	log.Println("Starting Frontend server on port", frontedPort)
-	g.Go(func() error {
-		return frontedServer.ListenAndServe()
-	})
-
-	if err = g.Wait(); err != nil {
-		log.Fatal(err)
-	}
+	log.Println("Server running on port " + appPort)
+	log.Fatal(http.ListenAndServe(":"+appPort, corsMiddleware.Handler(router)))
 }

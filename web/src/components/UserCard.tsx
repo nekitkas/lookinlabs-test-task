@@ -2,7 +2,9 @@ import React from 'react';
 import { useFetchData } from "../hooks/useFetchData";
 import { User } from "../types/user";
 
-const url = 'http://localhost:8080/api/v1/users';
+const url = process.env.NODE_ENV === 'production'
+    ? '/api/v1/users'
+    : 'http://localhost:8080/api/v1/users';
 
 export const UserCard: React.FC = () => {
     const { data, loading, error } = useFetchData<User[]>(url);

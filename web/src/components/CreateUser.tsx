@@ -2,7 +2,9 @@ import React, {useState} from "react";
 import { UserRequest } from "../types/user";
 import { usePostData } from "../hooks/usePostData";
 
-const url = 'http://localhost:8080/api/v1/users';
+const url = process.env.NODE_ENV === 'production'
+    ? '/api/v1/users'
+    : 'http://localhost:8080/api/v1/users';
 
 export const CreateUser: React.FC = () => {
     const [formData, setFormData] = useState<UserRequest>({ name: '', email: ''})
@@ -16,7 +18,6 @@ export const CreateUser: React.FC = () => {
         postData();
     }
 
-    console.log({ data, loading, error })
     return (
         <div className="max-w-md mx-auto bg-white shadow-md rounded p-6">
             <h1 className="text-2xl font-bold mb-4">Create User</h1>
